@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+
+		<div class="card">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+
+				<h4 class="card-title">
+					<a class="btn btn-light btn-xs"
+						th:href="@{'/veru/' + ${planificacione.usuario.id}}"
+						th:text="'&laquo; Volver'"></a>
+				</h4>
+
+				<form name="formFactura" th:action="@{/planificacione/formf/}"
+					th:object="${planificacione}" method="post">
+
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="'Usuario'"></label>
+						<div class="col-sm-6">
+							<input th:value="${planificacione.usuario.usuario}"
+								class="form-control" disabled='disabled' />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="'Descripción'"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{descripcion}" class="form-control" />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="'Observación'"></label>
+						<div class="col-sm-6">
+							<textarea th:field="*{observacion}" class="form-control"></textarea>
+						</div>
+					</div>
+
+
+
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="'Sala'"></label>
+						<div class="col-sm-6">
+							<select class="form-control" th:field="*{sala.id}">
+								<option th:each="sala : ${salas}" th:value="${sala.id}"
+									                           th:text="${sala.nombre}"></option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="'Fecha'"></label>
+						<div class="col-sm-6">
+			            	<input type="datetime-local" class="form-control" id="createAt" th:field="*{createAt}"/>
+						</div>
+					</div>					
+
+					<div class="form-group row">
+						<label for="buscar_producto" class="col-sm-2 col-form-label"
+							th:text="'Buscar Producto'"></label>
+						<div class="col-sm-6">
+							<input type="text" name="buscar_producto" id="buscar_producto"
+								class="form-control" />
+						</div>
+					</div>
+
+					<table
+						th:replace="planificacione/plantilla-items :: itemsPlanificacione"></table>
+
+					<table id="cargarItemPlanificacione"
+						class="table table-sm table-striped table-hover">
+
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Nombre</th>
+								<th>Cantidad Disponible</th>
+								<th>Cantidad Deseada</th>
+								<th>Eliminar</th>
+							</tr>
+						</thead>
+
+						<tbody>
+
+						</tbody>
+
+					</table>
+
+
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<input type="submit" th:value="${titulo}"
+								class="btn btn-secondary" />
+						</div>
+					</div>
+
+				</form>
+
+
+			</div>
+		</div>
+
+	</div>
+
+
+	<footer th:replace="layout/layout :: footer"></footer>
+	<script th:replace="planificacione/js/autocomplete-productos :: javascript"></script>
+
+</body>
+</html>

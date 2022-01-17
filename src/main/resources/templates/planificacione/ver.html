@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+
+		<div class="card">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+			
+			    <h4 class="card-title">
+			    <a class="btn btn-light btn-xs" th:href="@{'/veru/' + ${planificacione.usuario.id}}" th:text="'&laquo; volver'"></a>
+			    </h4>
+				
+				<ul class="list-group my-2">
+				<li class="list-group-item list-group-item-primary" th:text="'Datos del Usuario'"></li>
+				<li class="list-group-item" th:text="${planificacione.usuario.nombrecompleto}"></li>
+				<li class="list-group-item" th:text="${planificacione.usuario.usuario}"></li>
+				<li class="list-group-item" th:text="${planificacione.usuario.email}"></li>
+				</ul>
+				
+				<ul class="list-group">
+				<li class="list-group-item list-group-item-success" th:text="'Datos de la Planificación'"></li>
+				<li class="list-group-item" th:text="'Folio: ' + ${planificacione.id}"></li>	
+				<li class="list-group-item" th:text="'Descripcion: ' + ${planificacione.descripcion}"></li>
+				<li class="list-group-item" th:text="'Sala: ' + ${planificacione.sala.nombre}"></li>
+				<li class="list-group-item" th:text="'Fecha: ' + ${planificacione.createAt}"></li>														
+				</ul>
+				
+				<div class="alert alert-ingor my-4"	th:if="${#lists.isEmpty(planificacione.items)}" th:text="'No hay lineas para la planificación: ' + ${planificacione.descripcion}"></div>
+				
+				<table th:if="${not #lists.isEmpty(planificacione.items)}" class="table table-striped table-hover table-bordered my-3">
+				<thead>
+				<tr>
+				<th>Material</th>
+				<th>Cantidad</th>
+				</tr>
+				
+				</thead>
+				
+				<tbody>
+				<tr th:each="linea: ${planificacione.items}">
+				<td th:text="${linea.producto.nombre}"></td>
+				<td th:text="${linea.cantidad}"></td>				
+				</tr>
+				</tbody>
+				
+				</table>
+				
+				
+				<div class="card border-info mb-4" style="max-width: 20rem;">
+				<div class="card-header">Observaciones</div>
+				<div class="card-body">
+				<p class="card-text" th:text="${planificacione.observacion}" th:if="${not #strings.isEmpty(planificacione.observacion)}"></p>
+				<h4 class="card-title" th:if="${#strings.isEmpty(planificacione.observacion)}" th:text="'No tiene observaciones'"></h4>
+				
+				</div>
+				</div>	
+				
+			    <h4 class="card-title">
+			    <a class="btn btn-light btn-xs" th:href="@{'/veru/' + ${planificacione.usuario.id}}" th:text="'&laquo; volver'"></a>
+			    </h4>		
+
+			</div>
+		</div>
+
+	</div>
+	
+    
+        <footer th:replace="layout/layout :: footer"></footer>	
+
+</body>
+</html>

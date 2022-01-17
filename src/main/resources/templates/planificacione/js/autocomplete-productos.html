@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<script type="text/javascript" th:fragment="javascript">
+
+$(document).ready(function(){
+	
+	$("#buscar_producto").autocomplete({
+	
+		source: function(request, response){			
+			$.ajax({
+				url: "/planificacione/cargar-productos/" + request.term,
+				dataType: "json",
+				data: {
+					term: request.term
+				},
+				success: function(data){
+					response($.map(data, function(item){
+						return {
+							value: item.id,
+							label: item.nombre,
+							cantidad: item.cantidad,
+						};
+					}));
+				},
+			});
+		},
+		select: function(event, ui){
+			//$("#buscar_producto").val(ui.item.label);
+			
+			if(itemsHelper.hasProducto(ui.item.value)){
+				itemsHelper.incrementaCantidad(ui.item.value);
+				return false;
+			}
+			
+			var linea = $("#plantillaItemsPlanificacione").html();
+			
+			linea = linea.replace(/{ID}/g, ui.item.value);
+			linea = linea.replace(/{NOMBRE}/g, ui.item.label);
+			linea = linea.replace(/{CANTIDAD}/g, ui.item.cantidad);		
+			
+			$("#cargarItemPlanificacione tbody").append(linea);				
+			
+			return false;
+		}
+	});
+	
+	$("form[name='formFactura']").submit(function(){
+		$("#plantillaItemsPlanificacione").remove();
+		return;
+	});
+
+});
+    
+    var itemsHelper = {
+    	hasProducto: function(id){
+    	
+    		var resultado = false;
+    		$('input[name="item_id[]"').each(function(){
+    			if(parseInt(id) == parseInt($(this).val())){
+    				resultado = true;
+    			}
+    	     });
+    	     return resultado;	
+       },
+       incrementaCantidad: function(id){
+       		var cantidad = $("#cantidad_" + id).val() ? parseInt($("#cantidad_" + id).val()) :0;
+       		$("#cantidad_" + id).val(++cantidad); 		
+       		
+       },
+       eliminarLineaFactura: function(id){
+       	    $("#row_" + id).remove();
+       }
+    }
+    
+	</script>
+
+</body>
+</html>
