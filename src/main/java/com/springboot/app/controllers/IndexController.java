@@ -10,7 +10,7 @@ public class IndexController {
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
-	@GetMapping("/")
+	@GetMapping({ "/index", "/", "/home" })
 	public String index() {
 		return "layout/layout";
 	}
