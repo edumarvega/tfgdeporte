@@ -16,17 +16,16 @@
 						Usuario</a>
 				</h4>
 
-				<table class="table table-striped">
+				<table class="table table-striped" id="usuarioDataTable">
 					<thead>
 						<tr>
-							<th>id</th>
-							<th>usuario</th>
-							<th>email</th>
-<!-- 							<th>password</th> -->
+							<th>ID</th>
+							<th>Usuario</th>
+							<th>Email</th>
 							<th>Nombre completo</th>
-							<th>Crear Planificaciones</th>
-							<th>Editar</th>
-							<th>Eliminar</th>
+							<th>&nbsp;&nbsp;&nbsp;</th>
+							<th>&nbsp;&nbsp;&nbsp;</th>
+							<th>&nbsp;&nbsp;&nbsp;</th>
 						</tr>
 					</thead>
 
@@ -36,9 +35,8 @@
 								th:href="@{/veru/} + ${usuario.id}" th:text="${usuario.id}"></a></td>
 							<td th:text="${usuario.usuario}"></td>
 							<td th:text="${usuario.email}"></td>
-<!-- 							<td th:text="${usuario.password}"></td> -->
 							<td th:text="${usuario.nombrecompleto}"></td>
-							
+	
 							
 							<td><a class="btn btn-success btn-xs"
 								th:href="@{/planificacione/formf/} + ${usuario.id}" th:text="'Crear Planificaciones'"></a></td>							
@@ -57,17 +55,16 @@
 		</div>
 
 	</div>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-		integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-		integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-		crossorigin="anonymous"></script>
+	<footer th:replace="layout/layout :: footer"></footer>	
+		<script>
+			$(document).ready(function() {
+				$("#usuarioDataTable").DataTable({
+						'aoColumnDefs': [{
+        				'bSortable': false,
+        				'aTargets': [-1] /* 1st one, start by the right */
+    				}]
+				});
+			})
+		</script>
 </body>
 </html>
