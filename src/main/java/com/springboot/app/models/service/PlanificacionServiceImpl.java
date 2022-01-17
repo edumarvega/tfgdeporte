@@ -18,7 +18,6 @@ public class PlanificacionServiceImpl implements IPlanificacionService{
 	@Override
 	@Transactional(readOnly = true)
 	public List<Planificacione> findAll() {
-		// TODO Auto-generated method stub
 		return (List<Planificacione>) planiDao.findAll();
 	}
 

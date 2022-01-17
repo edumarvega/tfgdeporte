@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.springboot.app.models.service.IPlanificacionService;
-import com.springboot.app.models.service.IUsuariosService;
 
 @Controller
 public class PlaniController {
@@ -21,8 +20,9 @@ public class PlaniController {
 	
 	@RequestMapping(value="/listarpla", method=RequestMethod.GET)
 	public String listarp(Model model) {
+		
 		model.addAttribute("titulo", "Listado de Planificaciones");
-		model.addAttribute("planificacione", planiService.findAll());
+		model.addAttribute("planificaciones", planiService.findAll());
 			
 		return "listarpla";
 	}	
