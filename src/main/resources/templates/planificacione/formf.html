@@ -18,7 +18,7 @@
 				</h4>
 
 				<form name="formFactura" th:action="@{/planificacione/formf/}"
-					th:object="${planificacione}" method="post">
+					th:object="${planificacione}" method="post" onsubmit="return checkDate(createAt.value);">
 
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="'Usuario'"></label>
@@ -58,7 +58,9 @@
 						<label class="col-sm-2 col-form-label" th:text="'Fecha'"></label>
 						<div class="col-sm-6">
 			            	<input type="datetime-local" class="form-control" id="createAt" th:field="*{createAt}"/>
-						</div>
+	 					</div>
+						<div id="dateMessage" class="text-danger"></div>
+						 
 					</div>					
 
 					<div class="form-group row">
@@ -111,6 +113,35 @@
 
 	<footer th:replace="layout/layout :: footer"></footer>
 	<script th:replace="planificacione/js/autocomplete-productos :: javascript"></script>
+	<script>
+
+		function checkDate(dateString) {
+		  console.log(dateString);
+		  var date = convertDateToUTC(new Date(dateString));
+		  var fechaMinima = new Date();
+		  fechaMinima.setDate(fechaMinima.getDate() + 2);
+		 
+		  if (isNaN(date.getTime())) {
+		  	console.log('* Debe eligir una fecha y hora');
+		  	document.getElementById('dateMessage').innerHTML  = '* Debe eligir una fecha y hora';
+		    return false;
+		  } else if (date < fechaMinima) {
+			  console.log('* La fecha deben ser 48 hrs mas al dia actual');
+			  document.getElementById('dateMessage').innerHTML  = '* La fecha deben ser 48 hrs mas al dia actual';
+			  return false;
+		  } else {
+			console.log(date, fechaMinima, date >= fechaMinima); 
+			 document.getElementById('dateMessage').innerHTML  = '';
+			return true;
+		  }
+		}
+
+		function convertDateToUTC(date) { 
+		    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()); 
+		}
+
+	
+	</script>
 
 </body>
 </html>
