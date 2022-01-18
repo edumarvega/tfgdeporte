@@ -27,8 +27,8 @@
 				<li class="list-group-item" th:text="'Folio: ' + ${planificacione.id}"></li>	
 				<li class="list-group-item" th:text="'Descripcion: ' + ${planificacione.descripcion}"></li>
 				<li class="list-group-item" th:text="'Sala: ' + ${planificacione.sala.nombre}"></li>
-				<li class="list-group-item" th:text="'Fecha: ' + ${planificacione.createAt}"></li>														
-				</ul>
+				<li class="list-group-item" th:text="'Fecha: ' + ${#calendars.format(planificacione.createAt,'dd/MM/yyyy HH:mm:ss')}"></li>
+  				</ul>
 				
 				<div class="alert alert-ingor my-4"	th:if="${#lists.isEmpty(planificacione.items)}" th:text="'No hay lineas para la planificación: ' + ${planificacione.descripcion}"></div>
 				

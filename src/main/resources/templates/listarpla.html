@@ -32,7 +32,7 @@
 							<td th:text="${planificacione.descripcion}"></td>
  							<td th:text="${planificacione.observacion}"></td> 
  							<td th:text="${planificacione.sala.nombre}"></td> 
-							<td th:text="${planificacione.createAt}"></td> 
+							<td th:text="${#calendars.format(planificacione.createAt,'dd/MM/yyyy HH:mm:ss')}"></td> 
  							<td><a class="btn btn-primary btn-xs" th:href="@{'/planificacione/ver/' + ${planificacione.id}}" th:text="'Detalle'"></a></td> 
 						</tr>
 					</tbody>
