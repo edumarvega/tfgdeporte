@@ -10,10 +10,11 @@ $(document).ready(function(){
 	
 		source: function(request, response){			
 			$.ajax({
-				url: "/planificacione/cargar-productos/" + request.term,
+				url: "/planificacione/cargar-productos/"+ request.term+"/"+$("#createAt").val(),
 				dataType: "json",
 				data: {
-					term: request.term
+					term: request.term,
+					createAt : $("#createAt").val()
 				},
 				success: function(data){
 					response($.map(data, function(item){

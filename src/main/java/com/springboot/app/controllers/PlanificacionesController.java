@@ -1,5 +1,9 @@
 package com.springboot.app.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,10 +26,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.springboot.app.models.entity.ItemPlanificacione;
 import com.springboot.app.models.entity.Planificacione;
 import com.springboot.app.models.entity.Producto;
-import com.springboot.app.models.entity.Sala;
 import com.springboot.app.models.entity.Usuario;
+import com.springboot.app.models.service.IPlanificacionService;
 import com.springboot.app.models.service.ISalasService;
 import com.springboot.app.models.service.IUsuariosService;
+import com.springboot.app.util.TfgUtil;
 
 @Controller
 @RequestMapping("/planificacione")
@@ -37,6 +42,9 @@ public class PlanificacionesController {
 	
 	@Autowired
 	private ISalasService salasService; 
+	
+	@Autowired
+	private IPlanificacionService planificacionService;
 	
 
 	
@@ -83,10 +91,51 @@ public class PlanificacionesController {
 		return "planificacione/formf";
 	}
 	
-	@GetMapping(value="/cargar-productos/{term}", produces= {"application/json"})
-	public @ResponseBody List<Producto> cargarProductos(@PathVariable String term){
-		logger.info("Luis 2 ");
-		return usuarioService.finByNombre(term);
+	@GetMapping(value="/cargar-productos/{term}/{createAt}", produces= {"application/json"})
+	public @ResponseBody List<Producto> cargarProductos(@PathVariable String term, @PathVariable String createAt){
+		
+		int acumulador = 0;
+        Long idProducto = null;
+		List<Producto> productos = usuarioService.finByNombre(term);
+		Date date = TfgUtil.convertirDateLocal(createAt);
+		List<Planificacione> lista = new ArrayList<>();
+		
+		if(date!=null) {
+			lista = this.planificacionService.findAllByCreateAt(date);
+		}
+				
+		//identifico el producto que debo actualizar cantidad
+        if(!productos.isEmpty()) {
+        	Producto prod = productos.get(0);
+        	idProducto = prod.getId();
+        }
+		
+        //acumulo las cantidades planificadas para un mismo producto y lo decremento
+        //del stock del producto
+        if(!lista.isEmpty()) {
+			for (Planificacione planificacione : lista) {
+				if(!planificacione.getItems().isEmpty()) {
+					for (ItemPlanificacione item : planificacione.getItems()) {
+						if(item.getProducto().getId().equals(idProducto)) {
+							acumulador = acumulador+item.getCantidad();
+						}
+						
+					}
+				}
+			}
+			//actualizo el stock a planifiacar
+			if(acumulador!=0) {
+				Producto prod = productos.get(0);
+				int cantidadActual = prod.getCantidad();
+				if(cantidadActual>=acumulador) {
+					prod.setCantidad(cantidadActual-acumulador);
+					productos.clear();
+					productos.add(prod);
+				}
+			}
+		}
+		
+		return productos;
     } 
 	
 	@PostMapping("/formf")

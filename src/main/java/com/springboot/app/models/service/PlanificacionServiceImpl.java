@@ -1,5 +1,6 @@
 package com.springboot.app.models.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,12 @@ public class PlanificacionServiceImpl implements IPlanificacionService{
 	@Transactional(readOnly = true)
 	public List<Planificacione> findAll() {
 		return (List<Planificacione>) planiDao.findAll();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Planificacione> findAllByCreateAt(Date createAt) {
+		return (List<Planificacione>) this.planiDao.findAllByCreateAt(createAt);
 	}
 
 }
