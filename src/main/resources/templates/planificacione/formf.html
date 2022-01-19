@@ -68,7 +68,7 @@
 							th:text="'Buscar Producto'"></label>
 						<div class="col-sm-6">
 							<input type="text" name="buscar_producto" id="buscar_producto"
-								class="form-control" />
+								class="form-control" disabled/>
 						</div>
 					</div>
 
@@ -124,14 +124,17 @@
 		  if (isNaN(date.getTime())) {
 		  	console.log('* Debe eligir una fecha y hora');
 		  	document.getElementById('dateMessage').innerHTML  = '* Debe eligir una fecha y hora';
+		  	 $("#buscar_producto").prop("disabled",true);
 		    return false;
 		  } else if (date < fechaMinima) {
 			  console.log('* La fecha deben ser 48 hrs mas al dia actual');
 			  document.getElementById('dateMessage').innerHTML  = '* La fecha deben ser 48 hrs mas al dia actual';
+			  $("#buscar_producto").prop("disabled",true);
 			  return false;
 		  } else {
 			console.log(date, fechaMinima, date >= fechaMinima); 
 			 document.getElementById('dateMessage').innerHTML  = '';
+			 $("#buscar_producto").prop("disabled",false);
 			return true;
 		  }
 		}

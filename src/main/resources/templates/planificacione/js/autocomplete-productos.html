@@ -6,6 +6,15 @@
 
 $(document).ready(function(){
 	
+	$("#createAt").change(function(){
+		var valor = $("#createAt").val();
+		if (valor && valor.length>0) { 
+			 $("#buscar_producto").prop("disabled",false);
+		} else {
+			 $("#buscar_producto").prop("disabled",true);
+		}
+	});
+		
 	$("#buscar_producto").autocomplete({
 	
 		source: function(request, response){			
