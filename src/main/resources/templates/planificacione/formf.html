@@ -31,14 +31,14 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="'Descripción'"></label>
 						<div class="col-sm-6">
-							<input type="text" th:field="*{descripcion}" class="form-control" />
+							<input type="text" th:field="*{descripcion}" class="form-control" th:required="required"/>
 						</div>
 					</div>
 
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="'Observación'"></label>
 						<div class="col-sm-6">
-							<textarea th:field="*{observacion}" class="form-control"></textarea>
+							<textarea th:field="*{observacion}" class="form-control" th:required="required"></textarea>
 						</div>
 					</div>
 
@@ -57,7 +57,7 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="'Fecha'"></label>
 						<div class="col-sm-6">
-			            	<input type="datetime-local" class="form-control" id="createAt" th:field="*{createAt}"/>
+			            	<input type="datetime-local" class="form-control" id="createAt" th:field="*{createAt}" th:required="required"/>
 	 					</div>
 						<div id="dateMessage" class="text-danger"></div>
 						 

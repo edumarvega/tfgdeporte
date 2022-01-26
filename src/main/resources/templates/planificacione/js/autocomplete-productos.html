@@ -50,8 +50,16 @@ $(document).ready(function(){
 			linea = linea.replace(/{NOMBRE}/g, ui.item.label);
 			linea = linea.replace(/{CANTIDAD}/g, ui.item.cantidad);		
 			
-			$("#cargarItemPlanificacione tbody").append(linea);				
+			$("#cargarItemPlanificacione tbody").append(linea);	
 			
+			if(ui.item.cantidad==0){
+				$("#cantidad_" + ui.item.value).prop('min',0);
+				$("#cantidad_" + ui.item.value).prop('max',0); 
+			} else {
+				$("#cantidad_" + ui.item.value).prop('min',1); 
+				$("#cantidad_" + ui.item.value).prop('max',ui.item.cantidad); 
+			}
+			 			
 			return false;
 		}
 	});

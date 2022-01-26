@@ -11,7 +11,7 @@
 			<td>{ID}</td>
 			<td>{NOMBRE}</td>
 			<td>{CANTIDAD}</td>
-			<td><input type="number" value="1" name="cantidad[]" id="cantidad_{ID}" class="form-control col-sm-4"  onchange="itemsHelper.hasProducto({ID}, this.value);"/></td>
+			<td><input type="number" value="1" name="cantidad[]" id="cantidad_{ID}" min="1" max="1"  class="form-control col-sm-4"  onchange="itemsHelper.hasProducto({ID}, this.value);"/></td>
 		    <td><a href="#" class="btn btn-danger btn-xs" onclick="itemsHelper.eliminarLineaFactura({ID});">x</a></td>
 		</tr>
 	</tbody>
