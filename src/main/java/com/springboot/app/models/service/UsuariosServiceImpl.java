@@ -19,7 +19,7 @@ import com.springboot.app.models.entity.Usuario;
 public class UsuariosServiceImpl implements IUsuariosService{
     
 	@Autowired
-	private IUsuarioDao usuarioDato;
+	private IUsuarioDao usuarioDao;
 
 	@Autowired
 	private IProductosDao productoDao;
@@ -34,13 +34,13 @@ public class UsuariosServiceImpl implements IUsuariosService{
 	@Transactional(readOnly = true)
 	public List<Usuario> findAll() {
 		// TODO Auto-generated method stub
-		return (List<Usuario>) usuarioDato.findAll();
+		return (List<Usuario>) usuarioDao.findAll();
 	}
 
 	@Override
 	@Transactional
 	public void save(Usuario usuario) {
-		usuarioDato.save(usuario);
+		usuarioDao.save(usuario);
 		
 	}
 
@@ -48,13 +48,13 @@ public class UsuariosServiceImpl implements IUsuariosService{
 	@Transactional(readOnly = true)	
 	public Usuario findOne(Long id) {
 		// TODO Auto-generated method stub
-		return usuarioDato.findById(id).orElse(null);
+		return usuarioDao.findById(id).orElse(null);
 	}
  
 	@Override
 	@Transactional	
 	public void delete(Long id) {
-		usuarioDato.deleteById(id);
+		usuarioDao.deleteById(id);
 		
 	}
 
@@ -105,6 +105,12 @@ public class UsuariosServiceImpl implements IUsuariosService{
 	public Sala findSalaById(Long id) {
 		// TODO Auto-generated method stub
 		return salaDao.findById(id).orElse(null);
+	}
+
+	@Override
+	public Usuario findByUsuario(String usuario) {
+		
+		return this.usuarioDao.findByUsuario(usuario);
 	}
 	
 	

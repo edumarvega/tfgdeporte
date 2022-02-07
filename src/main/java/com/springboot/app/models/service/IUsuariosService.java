@@ -15,6 +15,8 @@ public interface IUsuariosService {
 	
 	public Usuario findOne(Long id);
 	
+	public Usuario findByUsuario(String usuario);
+	
 	public void delete(Long id);
 
 	public List<Producto> finByNombre(String term);

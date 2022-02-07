@@ -10,7 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -37,6 +39,10 @@ public class Usuario implements Serializable {
 	
 	@OneToMany(mappedBy="usuario", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Planificacione> planificaciones;
+	
+	@OneToOne
+	@JoinColumn(name="rol_id")
+	private Rol rol;
 	
 	
 
@@ -97,5 +103,12 @@ public class Usuario implements Serializable {
 		planificaciones.add(planificacione);
 	}
 
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
 
 }

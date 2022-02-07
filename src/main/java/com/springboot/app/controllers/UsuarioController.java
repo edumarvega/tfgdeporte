@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.springboot.app.models.dao.IUsuarioDao;
-import com.springboot.app.models.entity.Producto;
+import com.springboot.app.models.entity.Rol;
 import com.springboot.app.models.entity.Usuario;
+import com.springboot.app.models.service.IRolService;
 import com.springboot.app.models.service.IUsuariosService;
 
 @Controller
@@ -27,6 +27,9 @@ public class UsuarioController {
 
 	@Autowired
 	private IUsuariosService usuarioService;
+	
+	@Autowired
+	private IRolService rolService;
 
 	@RequestMapping(value = "/listaru", method = RequestMethod.GET)
 	public String listar(Model model) {
@@ -41,6 +44,8 @@ public class UsuarioController {
 		Usuario usuario = new Usuario();
 		model.put("usuario", usuario);
 		model.put("titulo", "Formulario de Usuario");
+		model.put("roles", this.rolService.findAll());
+		
 		return "formu";
 
 	}
@@ -52,7 +57,7 @@ public class UsuarioController {
 			model.addAttribute("titulo", "Formulario de Usuarios");
 			return "formu";
 		}
-		
+				
 		String mensajeFlash = (usuario.getId() != null)? "Usuario editado con éxito" : "Usuario creado con éxito";	
 		usuarioService.save(usuario);
 		status.setComplete();
@@ -78,6 +83,8 @@ public class UsuarioController {
 		}
 		model.put("usuario", usuario);
 		model.put("titulo", "Editar Usuario");
+		model.put("roles", this.rolService.findAll());
+		
 		return "formu";
 	}
 

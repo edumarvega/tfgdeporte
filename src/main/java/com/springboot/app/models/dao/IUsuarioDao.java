@@ -7,5 +7,5 @@ import com.springboot.app.models.entity.Usuario;
 
 public interface IUsuarioDao extends CrudRepository<Usuario, Long>{
 
-
+	public Usuario findByUsuario(String usuario);
 }
