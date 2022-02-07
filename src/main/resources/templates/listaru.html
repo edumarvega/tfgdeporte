@@ -1,19 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
 <body>
 
 	<header th:replace="layout/layout :: header"></header>
 
 	<div class="container py-4">
-
+		<div sec:authorize="isAuthenticated()">
+  			  Welcome, <span sec:authentication="name">Username</span>     
+		</div>
 		<div class="card">
 			<div class="card-header" th:text="${titulo}"></div>
 			<div class="card-body">
 
 				<h4 class="card-title">
+				<span sec:authorize="hasAuthority('ADMIN')">
 					<a th:href="@{/formu}" class="btn btn-primary btn-xs">Crear
 						Usuario</a>
+				</span>
 				</h4>
 
 				<table class="table table-striped" id="usuarioDataTable">
@@ -44,9 +49,14 @@
 							
 							<td><a class="btn btn-primary btn-xs"
 								th:href="@{/formu/} + ${usuario.id}" th:text="'Editar'"></a></td>
-							<td><a class="btn btn-danger btn-xs"
+							<td>
+							<div sec:authorize="hasAuthority('ADMIN')">
+								<a class="btn btn-danger btn-xs"
 								th:href="@{/eliminaru/} + ${usuario.id}" th:text="'Eliminar'"
-								onclick="return confirm('Estás seguro?');"></a></td>
+								onclick="return confirm('Estás seguro?');"></a>
+							</div>
+							</td>
+
 						</tr>
 					</tbody>
 
