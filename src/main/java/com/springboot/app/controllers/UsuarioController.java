@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.springboot.app.models.entity.Rol;
 import com.springboot.app.models.entity.Usuario;
-import com.springboot.app.models.service.IRolService;
+import com.springboot.app.models.service.IRoleService;
 import com.springboot.app.models.service.IUsuariosService;
 
 @Controller
@@ -29,8 +28,8 @@ public class UsuarioController {
 	private IUsuariosService usuarioService;
 	
 	@Autowired
-	private IRolService rolService;
-
+	private IRoleService rolService;
+		
 	@RequestMapping(value = "/listaru", method = RequestMethod.GET)
 	public String listar(Model model) {
 		model.addAttribute("titulo", "Listado de Usuarios");
@@ -59,7 +58,9 @@ public class UsuarioController {
 		}
 				
 		String mensajeFlash = (usuario.getId() != null)? "Usuario editado con éxito" : "Usuario creado con éxito";	
+				
 		usuarioService.save(usuario);
+		
 		status.setComplete();
 
 		flash.addFlashAttribute("success", mensajeFlash);		
@@ -81,6 +82,10 @@ public class UsuarioController {
 			flash.addFlashAttribute("error", "El Usuario creado no puede ser cero!");
 			return "redirect:/listaru";
 		}
+		
+		//blanqueo el password
+		usuario.setPassword("");
+		
 		model.put("usuario", usuario);
 		model.put("titulo", "Editar Usuario");
 		model.put("roles", this.rolService.findAll());

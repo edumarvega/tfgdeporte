@@ -41,8 +41,8 @@ public class Usuario implements Serializable {
 	private List<Planificacione> planificaciones;
 	
 	@OneToOne
-	@JoinColumn(name="rol_id")
-	private Rol rol;
+	@JoinColumn(name="role_id")
+	private Role role;
 	
 	
 
@@ -103,12 +103,12 @@ public class Usuario implements Serializable {
 		planificaciones.add(planificacione);
 	}
 
-	public Rol getRol() {
-		return rol;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setRol(Rol rol) {
-		this.rol = rol;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 }

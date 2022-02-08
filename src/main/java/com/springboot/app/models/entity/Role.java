@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "roles")
-public class Rol implements Serializable{
+public class Role implements Serializable{
 	
 	/**
 	 * 
@@ -21,16 +21,16 @@ public class Rol implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String rol;
+	private String role;
 	
 	private String nombre;
 
-	public Rol() {
+	public Role() {
 		
 	}
 
-	public Rol(String rol, String nombre) {
-		this.rol = rol;
+	public Role(String rol, String nombre) {
+		this.role = rol;
 		this.nombre = nombre;
 	}
 
@@ -42,12 +42,12 @@ public class Rol implements Serializable{
 		this.id = id;
 	}
 
-	public String getRol() {
-		return rol;
+	public String getRole() {
+		return role;
 	}
 
-	public void setRol(String rol) {
-		this.rol = rol;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public String getNombre() {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
 <meta charset="UTF-8" />
 <title th:text="${titulo}">Insert title here</title>
@@ -27,14 +28,17 @@
 					<ul class="navbar-nav">
 <!-- 						<li class="nav-item"><a class="nav-link active" -->
 <!-- 							aria-current="page" href="#">Home</a></li> -->
-						<li class="nav-item"><a class="nav-link" th:href="@{/listar}">Salas</a>
-						<li class="nav-item"><a class="nav-link" th:href="@{/listarp}">Materiales</a>
+						<li class="nav-item"><span sec:authorize="hasAuthority('ADMIN')"><a class="nav-link" th:href="@{/listar}">Salas</a></span>
+						<li class="nav-item"><span sec:authorize="hasAuthority('ADMIN')"><a class="nav-link" th:href="@{/listarp}">Materiales</a></span>
 						<li class="nav-item"><a class="nav-link" th:href="@{/listaru}">Usuarios</a>		
 						<li class="nav-item"><a class="nav-link" th:href="@{/listarpla}">Planificaciones</a>											
 						</li>
 					</ul>
 				</div>
-				<a class="nav-link navbar-right" th:href="@{/logout}" >LOGOUT</a>
+				<div class="float-right" sec:authorize="isAuthenticated()">
+  			 	 <span style="color:white;">Bienvenido:&nbsp;</span><span style="color:white;" sec:authentication="name">Username</span>     
+				</div>
+				<a class="nav-link navbar-right" th:href="@{/logout}">[LOGOUT]</a>
 			</div>
 		</nav>
 

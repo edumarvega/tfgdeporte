@@ -3,6 +3,7 @@ package com.springboot.app.models.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,11 @@ public class UsuariosServiceImpl implements IUsuariosService{
 	@Autowired
 	private ISalasDao salaDao;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+
+	
 	@Override
 	@Transactional(readOnly = true)
 	public List<Usuario> findAll() {
@@ -40,6 +46,8 @@ public class UsuariosServiceImpl implements IUsuariosService{
 	@Override
 	@Transactional
 	public void save(Usuario usuario) {
+		String passEncript = this.passwordEncoder.encode(usuario.getPassword());
+		usuario.setPassword(passEncript);
 		usuarioDao.save(usuario);
 		
 	}

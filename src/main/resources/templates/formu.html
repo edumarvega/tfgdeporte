@@ -24,10 +24,10 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">perfil</label>
 						<div class="col-sm-6">
-							<select class="form-control" th:field="*{rol.id}">
-								<option th:each="rol: ${roles}" th:value="${rol.id}"
-									                           th:text="${rol.nombre}"
-									    th:selected="${rol.id} == ${usuario.rol.id}"></option>
+							<select class="form-control" th:field="*{role.id}">
+								<option th:each="role: ${roles}" th:value="${role.id}"
+									                           th:text="${role.nombre}"
+									    th:selected="${role.id} == ${usuario.role.id}"></option>
 							</select>
 						</div>
 					</div>

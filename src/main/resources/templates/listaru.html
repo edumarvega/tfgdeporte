@@ -7,9 +7,6 @@
 	<header th:replace="layout/layout :: header"></header>
 
 	<div class="container py-4">
-		<div sec:authorize="isAuthenticated()">
-  			  Welcome, <span sec:authentication="name">Username</span>     
-		</div>
 		<div class="card">
 			<div class="card-header" th:text="${titulo}"></div>
 			<div class="card-body">
