@@ -1,10 +1,14 @@
 package com.springboot.app.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.springboot.app.models.entity.Role;
 import com.springboot.app.models.entity.Usuario;
 import com.springboot.app.models.service.IRoleService;
 import com.springboot.app.models.service.IUsuariosService;
@@ -32,8 +37,27 @@ public class UsuarioController {
 		
 	@RequestMapping(value = "/listaru", method = RequestMethod.GET)
 	public String listar(Model model) {
+		List<Usuario> usuarios = new ArrayList<>();
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		System.out.println("usuario logueado: "+currentPrincipalName);
+		
+		Usuario usuario = this.usuarioService.findByUsuario(currentPrincipalName);
+		if(usuario!=null) {
+			String roleAdmin = "ADMIN";
+			Role role =usuario.getRole();
+			if(role!=null) {
+				if(roleAdmin.equals(role.getRole())) {
+					usuarios = usuarioService.findAll();
+				} else {
+					usuarios.add(usuario);
+				}
+			} 
+		}
+		
 		model.addAttribute("titulo", "Listado de Usuarios");
-		model.addAttribute("usuarios", usuarioService.findAll());
+		model.addAttribute("usuarios", usuarios);
 		return "listaru";
 	}
 

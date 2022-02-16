@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.springboot.app.models.dao.IPlanificacionesDao;
 import com.springboot.app.models.entity.Planificacione;
+import com.springboot.app.models.entity.Usuario;
 
 @Service
 public class PlanificacionServiceImpl implements IPlanificacionService{
@@ -26,6 +27,13 @@ public class PlanificacionServiceImpl implements IPlanificacionService{
 	@Transactional(readOnly = true)
 	public List<Planificacione> findAllByCreateAt(Date createAt) {
 		return (List<Planificacione>) this.planiDao.findAllByCreateAt(createAt);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Planificacione> findByUsuario(Usuario usuario) {
+		
+		return (List<Planificacione>) this.planiDao.findByUsuario(usuario);
 	}
 
 }
