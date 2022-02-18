@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		// {noop} => No operation for password encoder	(no password encoding needed)
 		//auth.inMemoryAuthentication().withUser("admin").password("{noop}admin").authorities("ADMIN");
-		//auth.inMemoryAuthentication().withUser("tincho").password("{noop}tincho").authorities("EMPLOYEE");
+		//auth.inMemoryAuthentication().withUser("tincho").password("{noop}tincho").authorities("USER");
 		auth.userDetailsService(this.userDetailsService).passwordEncoder(encoder());
 	}
 	
