@@ -8,6 +8,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,6 +70,7 @@ public class UsuarioController {
 		model.put("usuario", usuario);
 		model.put("titulo", "Formulario de Usuario");
 		model.put("roles", this.rolService.findAll());
+		model.put("action", "no_readonly");
 		
 		return "formu";
 
@@ -109,10 +112,20 @@ public class UsuarioController {
 		
 		//blanqueo el password
 		usuario.setPassword("");
+			
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		List<SimpleGrantedAuthority> lista = (List<SimpleGrantedAuthority>)authentication.getAuthorities();
+		String rol = lista.get(0).getAuthority();
 		
+		String action = "readonly";
+		if(rol.equals("ADMIN")) {
+			action = "no_readonly";
+		}
+				
 		model.put("usuario", usuario);
 		model.put("titulo", "Editar Usuario");
 		model.put("roles", this.rolService.findAll());
+		model.put("action", action);
 		
 		return "formu";
 	}

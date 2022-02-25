@@ -16,7 +16,7 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">usuario</label>
 						<div class="col-sm-6">
-							<input type="text" th:field="*{usuario}" class="form-control" th:errorclass="'form-control alert-danger'" th:required="required"/>
+							<input type="text" th:field="*{usuario}" class="form-control" th:errorclass="'form-control alert-danger'" th:readonly="${action=='readonly'}" th:required="required"/>
 	
 						</div>
 					</div>
@@ -24,7 +24,7 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">perfil</label>
 						<div class="col-sm-6">
-							<select class="form-control" th:field="*{role.id}">
+							<select class="form-control" th:field="*{role.id}" th:readonly="${action=='readonly'}">
 								<option th:each="role: ${roles}" th:value="${role.id}"
 									                           th:text="${role.nombre}"
 									    th:selected="${role.id} == ${usuario.role.id}"></option>
@@ -35,7 +35,7 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">email</label>
 						<div class="col-sm-6">
-							<input type="email" th:field="*{email}" class="form-control" th:errorclass="'form-control alert-danger'" th:required="required"/>
+							<input type="email" th:field="*{email}" class="form-control" th:errorclass="'form-control alert-danger'" th:readonly="${action=='readonly'}" th:required="required"/>
 								
 						</div>
 					</div>
@@ -52,7 +52,7 @@
 						<label class="col-sm-2 col-form-label">nombrecompleto</label>
 						<div class="col-sm-6">
 							<input type="text" th:field="*{nombrecompleto}"
-								class="form-control" th:errorclass="'form-control alert-danger'" th:required="required"/>
+								class="form-control" th:errorclass="'form-control alert-danger'" th:readonly="${action=='readonly'}" th:required="required"/>
 											
 						</div>
 					</div>
