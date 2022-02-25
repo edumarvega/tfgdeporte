@@ -83,6 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//Login Form Details
 		.and()
 		.formLogin()
+		.loginPage("/login")
 		.defaultSuccessUrl("/listarpla", true)
 		
 		//Logout Form Details

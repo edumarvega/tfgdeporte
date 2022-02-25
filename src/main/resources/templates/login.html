@@ -1,21 +1,39 @@
-<html>
-<head></head>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
 <body>
-   <h1>Login</h1>
-   <form name='f' action="login" method='POST'>
-      <table>
-         <tr>
-            <td>Usuario:</td>
-            <td><input type='text' name='username' value=''></td>
-         </tr>
-         <tr>
-            <td>Clave:</td>
-            <td><input type='password' name='password' /></td>
-         </tr>
-         <tr>
-            <td><input name="submit" type="submit" value="submit" /></td>
-         </tr>
-      </table>
-  </form>
+
+<div class="container-fluid text-center">
+    <br>
+    <form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto;">
+	    <div th:if="${param.error}">
+            <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+        </div>
+         
+        <div th:if="${param.logout}">
+            <p class="text-warning">Has terminado tu sesion.</p>
+        </div>
+         
+        <div class="border border-secondary p-3 rounded">
+		    <div>
+		        <img class="img-fluid" th:src="@{/images/login.png}" alt="" width="300" height="100"/>
+		    </div>
+        	<br>
+            <h3>BIENVENIDO A TFG</h3>
+            <br>
+             <div class="form-group">
+            	<p class="text-left">Usuario</p>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Usuario" required autofocus/>
+            </div>
+             <div class="form-group">
+            	<p class="text-left">Password</p>
+                <input type="password" id="username" name="password" class="form-control" placeholder="Password" required />
+            </div>
+            <p>
+                <input type="submit" value="Ingresar" class="btn btn-primary btn-block" />
+            </p>
+        </div>
+    </form>      
+</div>
 </body>
 </html>
