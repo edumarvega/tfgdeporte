@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "planificaciones_items")
@@ -25,6 +26,9 @@ public class ItemPlanificacione implements Serializable {
 	private Long id;
 
 	private Integer cantidad;
+	
+	@Transient
+	private Integer cantidadDisponible;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="producto_id")	
@@ -56,5 +60,15 @@ public class ItemPlanificacione implements Serializable {
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
+
+	public Integer getCantidadDisponible() {
+		return cantidadDisponible;
+	}
+
+	public void setCantidadDisponible(Integer cantidadDisponible) {
+		this.cantidadDisponible = cantidadDisponible;
+	}
+	
+	
 	
 }

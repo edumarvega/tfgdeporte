@@ -48,7 +48,7 @@ $(document).ready(function(){
 			
 			linea = linea.replace(/{ID}/g, ui.item.value);
 			linea = linea.replace(/{NOMBRE}/g, ui.item.label);
-			linea = linea.replace(/{CANTIDAD}/g, ui.item.cantidad);		
+			linea = linea.replace(/{CANTIDAD_DISPONIBLE}/g, ui.item.cantidad);		
 			
 			$("#cargarItemPlanificacione tbody").append(linea);	
 			

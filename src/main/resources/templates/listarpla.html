@@ -18,10 +18,10 @@
 							<th>Usuario</th>
 							<th>Folio</th>
 							<th>Descripcion</th>
-							<th>Observaciones</th> 
 							<th>Sala</th> 
 							<th>Fecha</th> 
 							<th>Ver</th> 
+							<th>Editar</th> 
 							<th>Eliminar</th>
 						</tr>
 					</thead>
@@ -31,10 +31,10 @@
 							<td th:text="${planificacione.usuario.usuario}"></td>
 							<td th:text="${planificacione.id}"></td>
 							<td th:text="${planificacione.descripcion}"></td>
- 							<td th:text="${planificacione.observacion}"></td> 
  							<td th:text="${planificacione.sala.nombre}"></td> 
 							<td th:text="${#calendars.format(planificacione.createAt,'dd/MM/yyyy HH:mm:ss')}"></td> 
  							<td><a class="btn btn-primary btn-xs" th:href="@{'/planificacione/ver/' + ${planificacione.id}}" th:text="'Detalle'"></a></td> 
+ 							<td><a class="btn btn-warning btn-xs" th:href="@{'/planificacione/editarp/' + ${planificacione.id}}" th:text="'Editar'"></a></td> 
  							<td><a class="btn btn-danger btn-xs" th:href="@{'/planificacione/eliminarp/' + ${planificacione.id}}" th:text="'Eliminar'" onclick="return confirm('Estás seguro?');"></a></td>
 						</tr>
 					</tbody>

@@ -49,7 +49,8 @@
 						<div class="col-sm-6">
 							<select class="form-control" th:field="*{sala.id}">
 								<option th:each="sala : ${salas}" th:value="${sala.id}"
-									                           th:text="${sala.nombre}"></option>
+									                           th:text="${sala.nombre}"
+									      th:selected="${sala.id} == ${planificacione.sala.id}"></option>
 							</select>
 						</div>
 					</div>
@@ -67,8 +68,7 @@
 						<label for="buscar_producto" class="col-sm-2 col-form-label"
 							th:text="'Buscar Producto'"></label>
 						<div class="col-sm-6">
-							<input type="text" name="buscar_producto" id="buscar_producto"
-								class="form-control" disabled/>
+							<input type="text" name="buscar_producto" id="buscar_producto" class="form-control" th:disabled="${operation == 'create'}"/>
 						</div>
 					</div>
 
@@ -88,8 +88,19 @@
 							</tr>
 						</thead>
 
-						<tbody>
+						<tbody th:if="${operation == 'create'}">
 
+						</tbody>
+						
+						<tbody th:unless="${operation == 'create'}">
+							<tr th:id="'row_'+${item.id}" th:each="item : ${planificacione.items}">
+								<td class="d-none"><input type="hidden" th:value="${item.producto.id}" name="item_id[]"/></td>
+								<td th:text="${item.producto.id}"></td>
+								<td th:text="${item.producto.nombre}"></td>
+								<td th:text="${item.cantidadDisponible}"></td>
+								<td><input type="number" th:value="${item.cantidad}" name="cantidad[]" th:id="'cantidad_'+${item.id}" min="1" th:max="${item.cantidadDisponible}==0?${item.cantidad}:${item.cantidadDisponible}"  class="form-control col-sm-4"  th:onchange="'itemsHelper.hasProducto('+${item.id}+', this.value);'"/></td>
+							    <td><a href="#" class="btn btn-danger btn-xs" th:onclick="itemsHelper.eliminarLineaFactura([[${item.id}]]);">x</a></td>
+							</tr>
 						</tbody>
 
 					</table>
