@@ -22,6 +22,7 @@
 							<th>Sala</th> 
 							<th>Fecha</th> 
 							<th>Ver</th> 
+							<th>Eliminar</th>
 						</tr>
 					</thead>
 
@@ -34,6 +35,7 @@
  							<td th:text="${planificacione.sala.nombre}"></td> 
 							<td th:text="${#calendars.format(planificacione.createAt,'dd/MM/yyyy HH:mm:ss')}"></td> 
  							<td><a class="btn btn-primary btn-xs" th:href="@{'/planificacione/ver/' + ${planificacione.id}}" th:text="'Detalle'"></a></td> 
+ 							<td><a class="btn btn-danger btn-xs" th:href="@{'/planificacione/eliminarp/' + ${planificacione.id}}" th:text="'Eliminar'" onclick="return confirm('Estás seguro?');"></a></td>
 						</tr>
 					</tbody>
 				</table>
