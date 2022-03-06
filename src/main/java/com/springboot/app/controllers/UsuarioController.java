@@ -8,7 +8,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -78,17 +77,34 @@ public class UsuarioController {
 
 	@RequestMapping(value = "/formu", method = RequestMethod.POST)
 	public String guardar(@Valid Usuario usuario, BindingResult result, Model model, RedirectAttributes flash, SessionStatus status) {
-
+		
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de Usuarios");
 			return "formu";
 		}
-				
-		String mensajeFlash = (usuario.getId() != null)? "Usuario editado con éxito" : "Usuario creado con éxito";	
-				
+		
+		Usuario usuarioBD = this.usuarioService.findByUsuario(usuario.getUsuario());
+		if (usuarioBD != null) {
+			model.addAttribute("error", "El Usuario ya existe, elija otro nombre de usuario!!");
+			model.addAttribute("usuario", usuario);
+			model.addAttribute("titulo", "Formulario de Usuario");
+			model.addAttribute("roles", this.rolService.findAll());
+			//si es alta de usuario
+			if (usuario.getId() == null) {
+					return "formu";
+
+			} else {
+				if (usuario.getId().longValue() != usuarioBD.getId().longValue()) {
+					return "formu";
+				}
+			}
+		}
+								
 		usuarioService.save(usuario);
 		
 		status.setComplete();
+		
+		String mensajeFlash = (usuario.getId() != null)? "Usuario editado con éxito" : "Usuario creado con éxito";
 
 		flash.addFlashAttribute("success", mensajeFlash);		
 		return "redirect:listaru";
