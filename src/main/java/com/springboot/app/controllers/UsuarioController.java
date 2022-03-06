@@ -55,6 +55,14 @@ public class UsuarioController {
 					usuarios.add(usuario);
 				}
 			} 
+		} else {
+			// el usuario rol ADMIN logeado se auto borro
+			// solo para el caso en este caso se vuelve a cargar la lista de usuarios 
+			List<SimpleGrantedAuthority> lista = (List<SimpleGrantedAuthority>)authentication.getAuthorities();
+			String rol = lista.get(0).getAuthority();
+			if(rol.equals("ADMIN")) {
+				usuarios = this.usuarioService.findAll();
+			}
 		}
 		
 		model.addAttribute("titulo", "Listado de Usuarios");
@@ -94,6 +102,7 @@ public class UsuarioController {
 					return "formu";
 
 			} else {
+				//el editar el nombre de un usuario
 				if (usuario.getId().longValue() != usuarioBD.getId().longValue()) {
 					return "formu";
 				}
