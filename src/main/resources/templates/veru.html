@@ -29,8 +29,7 @@
 					class="alert alert-info my-4"
 					th:text="'No hay planificaciones asignadas para el usuario ' + ' ' + ${usuario.usuario}"></div>
 
-				<table th:if="${not #lists.isEmpty(usuario.planificaciones)}"
-					class="table table-bordered table-striped my-4">
+				<table th:if="${not #lists.isEmpty(usuario.planificaciones)}" id="planificacionesDataTable" class="table table-striped table-bordered display nowrap" cellspacing="0" width="100%">
 					<thead class="thead-inverse">
 						<tr>
 							<th>Folio</th>
@@ -61,5 +60,19 @@
 
 	</div>
         <footer th:replace="layout/layout :: footer"></footer>	
+        <script>
+			$(document).ready(function() {
+				$("#planificacionesDataTable").DataTable({
+						'responsive': true,
+						"language": {
+				            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+				        },
+						'aoColumnDefs': [{
+        				'bSortable': false,
+        				'aTargets': [-1] /* 1st one, start by the right */
+    				}]
+				});
+			})
+		</script>
 </body>
 </html>
