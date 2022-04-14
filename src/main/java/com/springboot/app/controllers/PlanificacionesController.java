@@ -2,12 +2,17 @@ package com.springboot.app.controllers;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -136,10 +141,10 @@ public class PlanificacionesController {
     } 
 	
 	@PostMapping("/formf")
-	public String guardar(Planificacione planificacione, BindingResult result, Model model,
+	public String guardar(HttpServletRequest request, Planificacione planificacione, BindingResult result, Model model,
 			@RequestParam(name="item_id[]", required=false) Long[] itemId,
 			@RequestParam(name="cantidad[]", required=false) Integer[] cantidad,		
-			RedirectAttributes flash,
+			RedirectAttributes flash, 
 			SessionStatus status) {
 
 		if (result.hasErrors()) {
@@ -170,23 +175,57 @@ public class PlanificacionesController {
 			planificacione.addItemPlanificacione(linea);
 			
 		}
-			
-		usuarioService.savePlanificacione(planificacione);
 		
+		String operacion = "";	
+		String eventId = null;
+		if(planificacione.getId()==null) {
+			operacion="insert";
+		} else {
+			operacion="update";
+			eventId = planificacione.getEventId();
+		}
+		usuarioService.savePlanificacione(planificacione);
+			
 		status.setComplete();
 		flash.addFlashAttribute("success", "Planificacion creada con exito");
-		return "redirect:/veru/" + planificacione.getUsuario().getId();
+		//return "redirect:/veru/" + planificacione.getUsuario().getId();
+		
+		request.getSession().setAttribute("idUsuario", planificacione.getUsuario().getId());
+		request.getSession().setAttribute("idPlanificacion", planificacione.getId());
+		request.getSession().setAttribute("usuario", planificacione.getUsuario().getUsuario());
+		request.getSession().setAttribute("descripcion", planificacione.getDescripcion());
+		request.getSession().setAttribute("observacion", planificacione.getObservacion());
+		request.getSession().setAttribute("fecha", planificacione.getCreateAt());
+		request.getSession().setAttribute("operacion", operacion);
+		request.getSession().setAttribute("eventId", eventId);
+		
+		//si quiero guardar en el calendario de google calendar uso este redirect
+		return "redirect:/login/google";
 	
 	}
 	
 	@GetMapping("/eliminarp/{id}")
-	public String eliminar(@PathVariable(value="id") Long id, RedirectAttributes flash) {
+	public String eliminar(HttpServletRequest request ,@PathVariable(value="id") Long id, RedirectAttributes flash) {
 		Planificacione planificacione = usuarioService.findPlanificacioneById(id);
-		
+		String eventId = null;
 	    if(planificacione != null) {
+	    	String operacion = "delete";
+	    	eventId = planificacione.getEventId();
+	    	
+	    	request.getSession().setAttribute("idUsuario", planificacione.getUsuario().getId());
+			request.getSession().setAttribute("idPlanificacion", null);
+			request.getSession().setAttribute("usuario", null);
+			request.getSession().setAttribute("descripcion", null);
+			request.getSession().setAttribute("observacion", null);
+			request.getSession().setAttribute("fecha", null);
+			request.getSession().setAttribute("operacion", operacion);
+			request.getSession().setAttribute("eventId", eventId);
+	    	
 	    	usuarioService.deletePlanificacion(id);
 	    	flash.addFlashAttribute("success", "Planificacion eliminada con exito");
-	    	return "redirect:/veru/" + planificacione.getUsuario().getId();
+	    	//return "redirect:/veru/" + planificacione.getUsuario().getId();
+	    	
+	    	return "redirect:/login/google";
 	    }
 	    
     	flash.addFlashAttribute("error", "La Planificacion no existe en la BBDD, no se puedo eliminar");

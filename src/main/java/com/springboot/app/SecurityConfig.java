@@ -61,6 +61,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and().csrf().ignoringAntMatchers("/h2-console/**")
         .and().headers().frameOptions().sameOrigin();
 		
+		http.authorizeRequests().antMatchers("/login/**").permitAll()
+        .and().csrf().ignoringAntMatchers("/login/**")
+        .and().headers().frameOptions().sameOrigin();
+		
 		//declares which Page(URL) will have What access type
 		http
 		.csrf().disable()
@@ -73,6 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/listaru").hasAnyAuthority("ADMIN","USER")
 		.antMatchers("/listarpla").authenticated()
 		.antMatchers("/listarpla").hasAnyAuthority("ADMIN","USER")
+		.antMatchers("/listar").authenticated()
+		.antMatchers("/calendario").hasAuthority("ADMIN")
 		
 	
 		

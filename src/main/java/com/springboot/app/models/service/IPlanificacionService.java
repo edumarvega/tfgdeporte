@@ -13,4 +13,8 @@ public interface IPlanificacionService {
 	public List<Planificacione> findAllByCreateAt(Date createAt);
 	
 	public List<Planificacione> findByUsuario(Usuario usuario);
+	
+	public Planificacione finById(Long id);
+	
+	public Planificacione update(Planificacione planificacione);
 }

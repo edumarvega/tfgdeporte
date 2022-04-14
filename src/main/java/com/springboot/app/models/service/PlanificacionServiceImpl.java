@@ -36,4 +36,15 @@ public class PlanificacionServiceImpl implements IPlanificacionService{
 		return (List<Planificacione>) this.planiDao.findByUsuario(usuario);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public Planificacione finById(Long id) {
+		return this.planiDao.findById(id).orElse(null);
+	}
+
+	@Override
+	public Planificacione update(Planificacione planificacione) {
+		return this.planiDao.save(planificacione);
+	}
+
 }

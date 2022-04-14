@@ -52,6 +52,8 @@ public class Planificacione implements Serializable {
 	@JoinColumn(name="planificacione_id")
 	private List<ItemPlanificacione> items;
 	
+	private String eventId;
+	
 	
 	
 	public Planificacione() {
@@ -121,4 +123,13 @@ public class Planificacione implements Serializable {
 	}
 
 
+	public String getEventId() {
+		return eventId;
+	}
+
+
+	public void setEventId(String eventId) {
+		this.eventId = eventId;
+	}
+		
 }
